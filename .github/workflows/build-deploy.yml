@@ -1,32 +1,18 @@
-name: Build and Deploy
-
+name: Host Angular app in GitHub
 on:
   push:
     branches:
-      - main
       - master
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18.x'
-      - uses: actions/cache@v1
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: Build
-        run: |
-          npm install
-          npm run build --prod --base-href=/angular-gh-action/
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@releases/v3
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: dist/angular-gh-action
+    - uses: actions/checkout@v2
+    - name: Building and Deploying...
+      uses: AhsanAyaz/angular-deploy-gh-pages-actions@v1.3.1
+      with:
+        github_access_token: ${{ secrets.GITHUB_TOKEN }}
+        build_configuration: production
+        base_href: /angular-gh-action/
+        deploy_branch: gh-pages
+        angular_dist_build_folder: dist/angular-gh-action
