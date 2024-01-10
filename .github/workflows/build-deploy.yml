@@ -15,3 +15,4 @@ jobs:
         build_configuration: production
         base_href: /angular-gh-action/
         deploy_branch: gh-pages
+        angular_dist_build_folder: dist/angular-gh-action
